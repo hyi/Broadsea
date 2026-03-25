@@ -1,0 +1,13 @@
+services:
+  biasanalyzer:
+    env_file: "./biasanalyzer/.env"
+    image: renci/ba_app:latest
+    container_name: biasanalyzer
+    profiles:
+      - default
+    ports:
+      - "8050:8050"
+    volumes:
+      - ./biasanalyzer/config.yaml:/app/config.yaml:ro
+    depends_on:
+      - perseus-shareddb
