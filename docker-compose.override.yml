@@ -10,4 +10,4 @@ services:
     volumes:
       - ./biasanalyzer/config.yaml:/app/config/config.yaml:ro
     depends_on:
-      - perseus-shareddb
+      - broadsea-atlasdb 
