@@ -9,5 +9,7 @@ services:
       - "8050:8050"
     volumes:
       - ./biasanalyzer/config.yaml:/app/config/config.yaml:ro
+    labels:
+      - "traefik.enable=true"
     depends_on:
       - broadsea-atlasdb 

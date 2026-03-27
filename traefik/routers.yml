@@ -22,6 +22,13 @@ http:
       service: "ohdsi-atlas"
       rule: 'Host(`{{ env "BROADSEA_HOST" }}`) && PathPrefix(`/atlas`)'
 
+    biasanalyzer:
+      rule: 'Host(`{{ env "BROADSEA_HOST" }}`) && PathPrefix(`/biasanalyzer`)'
+      service: "biasanalyzer"
+      entryPoints: '{{ env "HTTP_TYPE" }}'
+      middlewares: 
+        - "biasanalyzer-path-strip"
+
     ohdsi-webapi:
       entryPoints: '{{ env "HTTP_TYPE" }}'
       service: "ohdsi-webapi"
@@ -146,6 +153,12 @@ http:
           - "/hades"
         forceSlash: false
 
+    biasanalyzer-path-strip:
+      stripPrefix:
+        prefixes: 
+          - "/biasanalyzer"
+        forceSlash: false
+
     broadsea-perseus-strip-prefix:
       stripPrefix:
         prefixes: 
@@ -178,6 +191,11 @@ http:
       loadBalancer:
         servers:
           - url: http://ohdsi-atlas:8080
+
+    biasanalyzer:
+      loadBalancer:
+        servers:
+          - url: http://biasanalyzer:8050
 
     ohdsi-webapi:
       loadBalancer:
